@@ -17,10 +17,10 @@ React (Vite)
 Node.js + Express
   |
   v
-MongoDB
+MongoDB Atlas
 ```
 
-The frontend currently displays a small proof-of-life page. The backend exposes `GET /health`, and connects to MongoDB at startup.
+The frontend currently displays a small proof-of-life page and reads its API base URL from `VITE_API_BASE_URL`. The backend exposes `GET /health` and `GET /api/v1/health`, and connects to MongoDB Atlas at startup through `MONGO_URI`.
 
 ## Planned architecture
 
@@ -54,12 +54,12 @@ This diagram is a roadmap only; Nginx, Redis, workers, and scaling are not imple
 
 - React and Vite
 - Node.js and Express
-- MongoDB and Mongoose
+- MongoDB Atlas and Mongoose
 - Docker and Docker Compose
 
 ## Local setup
 
-1. Copy `.env.example` to `.env` and adjust values for a locally running MongoDB if needed.
+1. Copy `.env.example` to `.env`. Replace the `MONGO_URI` placeholder with your MongoDB Atlas connection string. Do not commit this file.
 2. Install dependencies:
 
    ```bash
@@ -67,14 +67,14 @@ This diagram is a roadmap only; Nginx, Redis, workers, and scaling are not imple
    cd ../frontend && npm install
    ```
 
-3. Start MongoDB, then run the backend and frontend in separate terminals:
+3. Run the backend and frontend in separate terminals:
 
    ```bash
    cd backend && npm run dev
    cd frontend && npm run dev
    ```
 
-4. Visit `http://localhost:5173` and check `http://localhost:5000/health`.
+4. Visit `http://localhost:5173` and check `http://localhost:5000/health` or `http://localhost:5000/api/v1/health`.
 
 ## Docker setup
 
@@ -88,9 +88,11 @@ Services:
 
 - Frontend: `http://localhost:5173`
 - Backend health check: `http://localhost:5000/health`
-- MongoDB: `localhost:27017`
+- MongoDB Atlas is external and configured through the untracked `MONGO_URI` environment variable.
 
 Stop the stack with `docker compose down`.
+
+Docker Compose starts only the frontend and backend. It does not provision a database service.
 
 ## Roadmap
 
@@ -106,4 +108,3 @@ Stop the stack with `docker compose down`.
 10. Nginx and horizontal scaling
 11. Failure handling
 12. Testing, optimization, and documentation
-

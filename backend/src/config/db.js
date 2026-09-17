@@ -1,15 +1,13 @@
 import mongoose from 'mongoose';
+import config from './env.js';
 
 async function connectDatabase() {
-  const mongoUri = process.env.MONGO_URI;
-
-  if (!mongoUri) {
+  if (!config.mongoUri) {
     throw new Error('MONGO_URI is required. Set it in the environment.');
   }
 
-  await mongoose.connect(mongoUri);
-  console.log('Connected to MongoDB');
+  await mongoose.connect(config.mongoUri);
+  console.log('Connected to MongoDB Atlas');
 }
 
 export default connectDatabase;
-

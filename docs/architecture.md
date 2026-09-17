@@ -9,10 +9,10 @@ React (Vite)
 Node.js + Express
   |
   v
-MongoDB
+MongoDB Atlas
 ```
 
-The React frontend is a minimal proof-of-life page. Express provides `GET /health`, and Mongoose establishes the MongoDB connection when the backend starts. Docker Compose runs the frontend, backend, and MongoDB services.
+The React frontend is a minimal proof-of-life page and reads its backend base URL from `VITE_API_BASE_URL`. Express provides `GET /health` and versioned `GET /api/v1/health`; Mongoose establishes a MongoDB Atlas connection using `MONGO_URI` when the backend starts. Docker Compose runs only the frontend and backend application services.
 
 ## Planned architecture
 
@@ -40,5 +40,4 @@ The React frontend is a minimal proof-of-life page. Express provides `GET /healt
                         MongoDB
 ```
 
-This is a high-level future design, not the current implementation. Nginx, multiple Node servers, Redis, queues, Pub/Sub, and workers will be introduced only in later phases.
-
+This is a high-level future design, not the current implementation. Redis, Socket.IO, worker processes, Nginx, horizontal scaling, and load testing are planned only and will be introduced in later phases.

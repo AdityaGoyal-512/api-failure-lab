@@ -1,6 +1,8 @@
 services:
   frontend:
     build: ./frontend
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:5000/api/v1}
     ports:
       - "5173:5173"
     depends_on:
@@ -10,25 +12,7 @@ services:
     build: ./backend
     environment:
       PORT: ${PORT:-5000}
-      MONGO_URI: ${MONGO_URI:-mongodb://mongodb:27017/api_failure_lab}
+      MONGO_URI: ${MONGO_URI:-}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:5173}
     ports:
       - "5000:5000"
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
-  mongodb:
-    image: mongo:8
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-    healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-
-volumes:
-  mongodb_data:
-
