@@ -9,6 +9,8 @@ const config = {
   port: Number(process.env.PORT) || 5000,
   mongoUri: process.env.MONGO_URI,
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
 };
 
 export default config;

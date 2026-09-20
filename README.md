@@ -2,7 +2,7 @@
 
 API Failure Lab is a developer testing platform for creating controlled, unreliable API dependencies. It will let developers test how their applications behave when a dependency is slow, fails, returns selected HTTP statuses, or enforces rate limits.
 
-> **Status:** Under development. This repository currently contains only the project foundation (Phase 1).
+> **Status:** Under development. The project foundation and authentication are currently implemented.
 
 ## Problem statement
 
@@ -21,6 +21,8 @@ MongoDB Atlas
 ```
 
 The frontend currently displays a small proof-of-life page and reads its API base URL from `VITE_API_BASE_URL`. The backend exposes `GET /health` and `GET /api/v1/health`, and connects to MongoDB Atlas at startup through `MONGO_URI`.
+
+Authentication is available through `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, and protected `GET /api/v1/auth/me`. JWT configuration is supplied only through `JWT_SECRET` and `JWT_EXPIRES_IN` environment variables.
 
 ## Planned architecture
 
