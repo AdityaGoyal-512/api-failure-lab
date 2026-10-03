@@ -16,6 +16,10 @@ The React frontend is a minimal proof-of-life page and reads its backend base UR
 
 Authentication is implemented at `/api/v1/auth`. Passwords are hashed before storage, JWTs use environment-provided configuration, and protected routes authenticate the bearer token before resolving the current user.
 
+Simulation management is implemented at `/api/v1/simulations`. Each definition belongs to its authenticated creator, and all simulation queries include that owner identity.
+
+Simulation execution is public at `/api/v1/sim/<simulationId><path>` and does not require JWT authentication. It loads the saved definition, exactly matches its method and path, waits asynchronously for `latencyMs`, then uses secure Node.js randomness to apply `failureRate`. A successful request returns `successResponse`; an intentional failure returns `failureStatusCode` with `failureResponse`. Authenticated simulation CRUD remains protected.
+
 ## Planned architecture
 
 ```text

@@ -24,6 +24,14 @@ The frontend currently displays a small proof-of-life page and reads its API bas
 
 Authentication is available through `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, and protected `GET /api/v1/auth/me`. JWT configuration is supplied only through `JWT_SECRET` and `JWT_EXPIRES_IN` environment variables.
 
+## Simulation management
+
+A simulation is a saved API behaviour definition: its method, path, latency, failure settings, and JSON success/failure bodies. Authenticated users can create and manage their own definitions through `POST`/`GET /api/v1/simulations` and `GET`/`PUT`/`DELETE /api/v1/simulations/:id`.
+
+Simulation management CRUD requires JWT authentication. Simulation execution is public: call `METHOD /api/v1/sim/<simulationId><path>` without a JWT. The engine loads the saved definition, applies its asynchronous latency and failure probability, then returns its configured success response or failure status/body.
+
+For example, a `POST /payment` simulation with 2000ms latency, a 20% failure rate, and failure status `500` runs at `POST /api/v1/sim/<simulationId>/payment`: it waits about two seconds, returns the configured failure response roughly 20% of the time, and otherwise returns the configured success response.
+
 ## Planned architecture
 
 ```text
